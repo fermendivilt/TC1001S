@@ -9,6 +9,8 @@ Exercises
 5. Add width parameter.
 """
 
+from math import hypot
+
 from turtle import *
 
 from freegames import vector
@@ -36,19 +38,44 @@ def square(start, end):
     end_fill()
 
 
-def circle(start, end):
+def newcircle(start, end):
     """Draw circle from start to end."""
-    pass  # TODO
+    up()
+    goto(start.x, (start.y + (start.y / 2)))
+    radius = round(hypot((start.x - end.x),(start.y - end.y)), 1)
+    begin_fill()
+    circle(radius, 360)
+    end_fill()
 
 
 def rectangle(start, end):
     """Draw rectangle from start to end."""
-    pass  # TODO
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+
+    for count in range(2):
+        forward(end.x - start.x)
+        left(90)
+        forward(end.y - start.y)
+        left(90)
+
+    end_fill()
 
 
 def triangle(start, end):
     """Draw triangle from start to end."""
-    pass  # TODO
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+
+    for count in range(3):
+        forward(end.x - start.x)
+        left(120)
+
+    end_fill()
 
 
 def tap(x, y):
@@ -67,21 +94,24 @@ def tap(x, y):
 def store(key, value):
     """Store value in state at key."""
     state[key] = value
-
+    
+def color(value):
+    pencolor(value)
+    fillcolor(value)
 
 state = {'start': None, 'shape': line}
 setup(420, 420, 370, 0)
 onscreenclick(tap)
 listen()
 onkey(undo, 'u')
-onkey(lambda: color('black'), 'K')
-onkey(lambda: color('white'), 'W')
-onkey(lambda: color('green'), 'G')
-onkey(lambda: color('blue'), 'B')
+onkey(lambda: color('black'), 'k')
+onkey(lambda: color('white'), 'w')
+onkey(lambda: color('green'), 'g')
+onkey(lambda: color('blue'), 'b')
 onkey(lambda: color('red'), 'R')
 onkey(lambda: store('shape', line), 'l')
 onkey(lambda: store('shape', square), 's')
-onkey(lambda: store('shape', circle), 'c')
+onkey(lambda: store('shape', newcircle), 'c')
 onkey(lambda: store('shape', rectangle), 'r')
 onkey(lambda: store('shape', triangle), 't')
 done()
