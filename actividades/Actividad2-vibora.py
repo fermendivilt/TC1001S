@@ -1,40 +1,35 @@
-"""Snake, classic arcade game.
-
-Exercises
-
-1. How do you make the snake faster or slower?
-2. How can you make the snake go around the edges?
-3. How would you move the food?
-4. Change the snake to respond to mouse clicks.
 """
-
-from random import randrange
+Ejercicios:
+1. Comida que se mueve al azar un paso a la vez sin salirse de la ventana
+2. Colores aleatorios para la víbora y la comida
+"""
 from turtle import *
-
+from random import randrange
 from freegames import square, vector
+import random
 
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
-
+ran = random.randint(0, 4)
+ran2 = random.randint(0, 4)
+a = ["black", "blue", "yellow", "green", "purple"]
 
 def change(x, y):
-    """Change snake direction."""
+    #esta funcion sirve pa cambiar la posicion de la serpiente
     aim.x = x
     aim.y = y
 
-
 def inside(head):
-    """Return True if head inside boundaries."""
     return -200 < head.x < 190 and -200 < head.y < 190
 
-
 def move():
-    """Move snake forward one segment."""
+    #esta funcion sirve para mover a la serpiente
     head = snake[-1].copy()
     head.move(aim)
 
     if not inside(head) or head in snake:
+        #con esta funcion se choca y se pone roja la cabecita
         square(head.x, head.y, 9, 'red')
         update()
         return
@@ -42,6 +37,7 @@ def move():
     snake.append(head)
 
     if head == food:
+        #esta funcion cambia la posicion de la comida cuando se la come
         print('Snake:', len(snake))
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
@@ -51,12 +47,11 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9, 'black')
+        square(body.x, body.y, 9, a[ran2])#esta funcion crea a la serpiente
 
-    square(food.x, food.y, 9, 'green')
-    update()
+    square(food.x, food.y, 9, a[ran])#esta funcion dibuja el cuadradito
+    update()#update
     ontimer(move, 100)
-
 
 setup(420, 420, 370, 0)
 hideturtle()
