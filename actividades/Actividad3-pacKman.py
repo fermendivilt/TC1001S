@@ -1,12 +1,13 @@
 from random import choice
 from turtle import *
+from numpy import sign
 
 from freegames import floor, vector
-speed = 7
+speed = 10
 state = {'score': 0}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
-aim = vector(5, 0)
+aim = vector(speed, 0)
 pacman = vector(-40, -80)
 ghosts = [
     [vector(-160, 160), vector(speed, 0)],
@@ -122,12 +123,16 @@ def move():
     for point, course in ghosts:
         if valid(point + course):
             point.move(course)
+            if not valid(point):
+                point.move(vector((-course.x/speed), (-course.y/speed)))
         else:
             options = [
                 vector(speed, 0),
                 vector(-speed, 0),
                 vector(0, speed),
-                vector(0, -speed)
+                vector(0, -speed),
+                vector((sign(pacman.x - point.x) * speed), 0),
+                vector(0, (sign(pacman.y - point.y) * speed))
             ]
             plan = choice(options)
             course.x = plan.x
@@ -160,10 +165,10 @@ writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])
 listen()
-onkey(lambda: change(5, 0), 'Right')
-onkey(lambda: change(-5, 0), 'Left')
-onkey(lambda: change(0, 5), 'Up')
-onkey(lambda: change(0, -5), 'Down')
+onkey(lambda: change(speed, 0), 'Right')
+onkey(lambda: change(-speed, 0), 'Left')
+onkey(lambda: change(0, speed), 'Up')
+onkey(lambda: change(0, -speed), 'Down')
 world()
 move()
 done()
