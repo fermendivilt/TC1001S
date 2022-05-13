@@ -1,12 +1,9 @@
-"""Paint, for drawing shapes.
-
-Exercises
-
-1. Add a color.
-2. Complete circle.
-3. Complete rectangle.
-4. Complete triangle.
-5. Add width parameter.
+"""
+Ejercicios:
+1. Un color nuevo
+2. Dibujar un círculo
+3. Completar el rectángulo
+4. Completar el triángulo
 """
 
 from math import hypot
@@ -39,7 +36,9 @@ def square(start, end):
 
 
 def newcircle(start, end):
-    """Draw circle from start to end."""
+    """Punto 2: Se obtiene la distancia del click 1 al 2 con la 
+    función hypot, se redondea a un decimal, y se utiliza ese
+    resultado en la función por defecto de la tortuga."""
     turtle.up()
     turtle.goto(start.x, (start.y + (start.y / 2)))
     radius = round(hypot((start.x - end.x),(start.y - end.y)), 1)
@@ -49,7 +48,9 @@ def newcircle(start, end):
 
 
 def rectangle(start, end):
-    """Draw rectangle from start to end."""
+    """Punto 3: Se usa la misma lógica del cuadrado solo que, en este
+    caso, el ciclo solo itera 2 veces y utiliza tanto la diferencia
+    en x como en y."""
     turtle.up()
     turtle.goto(start.x, start.y)
     turtle.down()
@@ -65,7 +66,8 @@ def rectangle(start, end):
 
 
 def triangle(start, end):
-    """Draw triangle from start to end."""
+    """Punto 4: Misma lógica del cuadrado, pero teniendo en cuenta sus
+    diferencias "trigonométricas". Es un triángulo equilátero"""
     turtle.up()
     turtle.goto(start.x, start.y)
     turtle.down()
@@ -96,6 +98,8 @@ def store(key, value):
     state[key] = value
     
 def color(value):
+    """Punto 1: Aquí se cambian el color de la pluma y el de relleno 
+    (en el caso de las figuras)."""
     turtle.pencolor(value)
     turtle.fillcolor(value)
 
